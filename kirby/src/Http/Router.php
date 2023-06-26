@@ -117,10 +117,7 @@ class Router
 				if ($callback) {
 					$result = $callback($route);
 				} else {
-					$result = $route->action()->call(
-						$route,
-						...$route->arguments()
-					);
+					$result = $route->action()->call($route, ...$route->arguments());
 				}
 
 				$loop = false;
@@ -142,12 +139,8 @@ class Router
 	 * the routing action immediately
 	 * @since 3.7.0
 	 */
-	public static function execute(
-		string|null $path = null,
-		string $method = 'GET',
-		array $routes = [],
-		Closure|null $callback = null
-	) {
+	public static function execute(string|null $path = null, string $method = 'GET', array $routes = [], Closure|null $callback = null)
+	{
 		return (new static($routes))->call($path, $method, $callback);
 	}
 
@@ -157,11 +150,8 @@ class Router
 	 * find matches and return all the found
 	 * arguments in the path.
 	 */
-	public function find(
-		string $path,
-		string $method,
-		array|null $ignore = null
-	): Route {
+	public function find(string $path, string $method, array|null $ignore = null): Route
+	{
 		if (isset($this->routes[$method]) === false) {
 			throw new InvalidArgumentException('Invalid routing method: ' . $method, 400);
 		}
@@ -173,10 +163,7 @@ class Router
 			$arguments = $route->parse($route->pattern(), $path);
 
 			if ($arguments !== false) {
-				if (
-					empty($ignore) === true ||
-					in_array($route, $ignore) === false
-				) {
+				if (empty($ignore) === true || in_array($route, $ignore) === false) {
 					return $this->route = $route;
 				}
 			}

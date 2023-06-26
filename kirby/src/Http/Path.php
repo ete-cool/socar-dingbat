@@ -31,10 +31,8 @@ class Path extends Collection
 		return $this->toString();
 	}
 
-	public function toString(
-		bool $leadingSlash = false,
-		bool $trailingSlash = false
-	): string {
+	public function toString(bool $leadingSlash = false, bool $trailingSlash = false): string
+	{
 		if (empty($this->data) === true) {
 			return '';
 		}

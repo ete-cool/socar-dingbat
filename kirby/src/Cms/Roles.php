@@ -19,13 +19,6 @@ namespace Kirby\Cms;
 class Roles extends Collection
 {
 	/**
-	 * All registered roles methods
-	 *
-	 * @var array
-	 */
-	public static $methods = [];
-
-	/**
 	 * Returns a filtered list of all
 	 * roles that can be created by the
 	 * current user

@@ -459,19 +459,10 @@ class Blueprint
 
 		// groups don't need all the crap
 		if ($type === 'group') {
-			$fields = $props['fields'];
-
-			if (isset($props['when']) === true) {
-				$fields = array_map(
-					fn ($field) => array_replace_recursive(['when' => $props['when']], $field),
-					$fields
-				);
-			}
-
 			return [
-				'fields' => $fields,
+				'fields' => $props['fields'],
 				'name'   => $name,
-				'type'   => $type
+				'type'   => $type,
 			];
 		}
 

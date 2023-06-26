@@ -1,5 +1,5 @@
-<?php echo js('assets/js/modal.js') ?>
-<?php echo js('assets/js/type.js') ?>
+<?php echo js('assets/js/prism.js') ?>
+<?php echo js('assets/js/lightbox.js') ?>
 
 </body>
 </html>

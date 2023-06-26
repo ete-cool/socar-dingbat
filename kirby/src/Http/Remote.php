@@ -91,13 +91,7 @@ class Remote
 
 	public static function __callStatic(string $method, array $arguments = []): static
 	{
-		return new static(
-			url: $arguments[0],
-			options: array_merge(
-				['method' => strtoupper($method)],
-				$arguments[1] ?? []
-			)
-		);
+		return new static($arguments[0], array_merge(['method' => strtoupper($method)], $arguments[1] ?? []));
 	}
 
 	/**
@@ -182,10 +176,10 @@ class Remote
 			$headers = [];
 			foreach ($this->options['headers'] as $key => $value) {
 				if (is_string($key) === true) {
-					$value = $key . ': ' . $value;
+					$headers[] = $key . ': ' . $value;
+				} else {
+					$headers[] = $value;
 				}
-
-				$headers[] = $value;
 			}
 
 			$this->curlopt[CURLOPT_HTTPHEADER] = $headers;
@@ -270,10 +264,7 @@ class Remote
 		$query   = http_build_query($options['data']);
 
 		if (empty($query) === false) {
-			$url = match (Url::hasQuery($url)) {
-				true    => $url . '&' . $query,
-				default => $url . '?' . $query
-			};
+			$url = Url::hasQuery($url) === true ? $url . '&' . $query : $url . '?' . $query;
 		}
 
 		// remove the data array from the options

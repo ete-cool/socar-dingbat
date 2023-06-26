@@ -4,7 +4,6 @@ namespace Kirby\Toolkit;
 
 use Closure;
 use Exception;
-use InvalidArgumentException;
 
 /**
  * The `A` class provides a set of handy methods
@@ -46,17 +45,6 @@ class A
 		});
 
 		return $array;
-	}
-
-	/**
-	 * Counts the number of elements in an array
-	 *
-	 * @param array $array
-	 * @return int
-	 */
-	public static function count(array $array): int
-	{
-		return count($array);
 	}
 
 	/**
@@ -162,19 +150,6 @@ class A
 	}
 
 	/**
-	 * Checks if array has a value
-	 *
-	 * @param array $array
-	 * @param mixed $value
-	 * @param bool $strict
-	 * @return bool
-	 */
-	public static function has(array $array, $value, bool $strict = false): bool
-	{
-		return in_array($value, $array, $strict);
-	}
-
-	/**
 	 * Joins the elements of an array to a string
 	 */
 	public static function join(array|string $value, string $separator = ', '): string
@@ -184,33 +159,6 @@ class A
 		}
 
 		return implode($separator, $value);
-	}
-
-	/**
-	 * Takes an array and makes it associative by an argument.
-	 * If the argument is a callable, it will be used to map the array.
-	 * If it is a string, it will be used as a key to pluck from the array.
-	 *
-	 * <code>
-	 * $array = [['id'=>1], ['id'=>2], ['id'=>3]];
-	 * $keyed = A::keyBy($array, 'id');
-	 *
-	 * // Now you can access the array by the id
-	 * </code>
-	 *
-	 * @param array $array
-	 * @param string|callable $keyBy
-	 * @return array
-	 */
-	public static function keyBy(array $array, string|callable $keyBy): array
-	{
-		$keys = is_callable($keyBy) ? static::map($array, $keyBy) : static::pluck($array, $keyBy);
-
-		if (count($keys) !== count($array)) {
-			throw new InvalidArgumentException('The "key by" argument must be a valid key or a callable');
-		}
-
-		return array_combine($keys, $array);
 	}
 
 	public const MERGE_OVERWRITE = 0;
@@ -334,19 +282,6 @@ class A
 	}
 
 	/**
-	 * Reduce an array to a single value
-	 *
-	 * @param array $array
-	 * @param callable $callback
-	 * @param mixed $initial
-	 * @return mixed
-	 */
-	public static function reduce(array $array, callable $callback, $initial = null): mixed
-	{
-		return array_reduce($array, $callback, $initial);
-	}
-
-	/**
 	 * Shuffles an array and keeps the keys
 	 *
 	 * <code>
@@ -380,36 +315,6 @@ class A
 		}
 
 		return $new;
-	}
-
-
-	/**
-	 * Returns a slice of an array
-	 *
-	 * @param array $array
-	 * @param int $offset
-	 * @param int|null $length
-	 * @param bool $preserveKeys
-	 * @return array
-	 */
-	public static function slice(
-		array $array,
-		int $offset,
-		int $length = null,
-		bool $preserveKeys = false
-	): array {
-		return array_slice($array, $offset, $length, $preserveKeys);
-	}
-
-	/**
-	 * Sums an array
-	 *
-	 * @param array $array
-	 * @return int|float
-	 */
-	public static function sum(array $array): int|float
-	{
-		return array_sum($array);
 	}
 
 	/**
@@ -499,14 +404,15 @@ class A
 	 * @param int $limit The number of elements the array should
 	 *                   contain after filling it up.
 	 * @param mixed $fill The element, which should be used to
-	 *                    fill the array. If it's a callable, it
-	 *                    will be called with the current index
+	 *                    fill the array
 	 * @return array The filled-up result array
 	 */
 	public static function fill(array $array, int $limit, $fill = 'placeholder'): array
 	{
-		for ($x = count($array); $x < $limit; $x++) {
-			$array[] = is_callable($fill) ? $fill($x) : $fill;
+		$diff = $limit - count($array);
+
+		for ($x = 0; $x < $diff; $x++) {
+			$array[] = $fill;
 		}
 
 		return $array;

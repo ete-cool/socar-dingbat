@@ -72,12 +72,8 @@ class Route
 	 * Creates a new Route object for the given
 	 * pattern(s), method(s) and the callback action
 	 */
-	public function __construct(
-		string $pattern,
-		string $method,
-		Closure $action,
-		array $attributes = []
-	) {
+	public function __construct(string $pattern, string $method, Closure $action, array $attributes = [])
+	{
 		$this->action     = $action;
 		$this->attributes = $attributes;
 		$this->method     = $method;

@@ -521,26 +521,12 @@ class F
 			Dir::make($directory, true);
 		}
 
-		// atomically moving the file will only work if
-		// source and target are on the same filesystem
-		if (stat($oldRoot)['dev'] === stat($directory)['dev']) {
-			// same filesystem, we can move the file
-			return rename($oldRoot, $newRoot) === true;
+		// actually move the file
+		if (rename($oldRoot, $newRoot) !== true) {
+			return false;
 		}
 
-		// @codeCoverageIgnoreStart
-		// not the same filesystem; we need to copy
-		// the file and unlink the source afterwards
-		if (copy($oldRoot, $newRoot) === true) {
-			return unlink($oldRoot) === true;
-		}
-
-		// copying failed, ensure the new root isn't there
-		// (e.g. if the file could be created but there's no
-		// more remaining disk space to write its contents)
-		static::remove($newRoot);
-		return false;
-		// @codeCoverageIgnoreEnd
+		return true;
 	}
 
 	/**

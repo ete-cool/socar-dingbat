@@ -26,8 +26,6 @@ class Item
 
 	public const ITEMS_CLASS = Items::class;
 
-	protected Field|null $field;
-
 	/**
 	 * @var string
 	 */
@@ -59,7 +57,6 @@ class Item
 
 		$this->id       = $params['id']       ?? Str::uuid();
 		$this->params   = $params;
-		$this->field    = $params['field']    ?? null;
 		$this->parent   = $params['parent']   ?? App::instance()->site();
 		$this->siblings = $params['siblings'] ?? new $siblingsClass();
 	}
@@ -73,14 +70,6 @@ class Item
 	public static function factory(array $params)
 	{
 		return new static($params);
-	}
-
-	/**
-	 * Returns the parent field if known
-	 */
-	public function field(): Field|null
-	{
-		return $this->field;
 	}
 
 	/**

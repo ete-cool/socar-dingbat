@@ -217,6 +217,9 @@ class Cookie
 	{
 		// lazily request the instance for non-CMS use cases
 		$kirby = App::instance(null, true);
-		$kirby?->response()->usesCookie($key);
+
+		if ($kirby) {
+			$kirby->response()->usesCookie($key);
+		}
 	}
 }

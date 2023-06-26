@@ -4,7 +4,6 @@ namespace Kirby\Cms;
 
 use Closure;
 use Kirby\Exception\DuplicateException;
-use Kirby\Filesystem\Asset;
 use Kirby\Filesystem\Dir;
 use Kirby\Filesystem\F;
 use Kirby\Filesystem\Mime;
@@ -46,7 +45,6 @@ trait AppPlugins
 		// other plugin types
 		'api' => [],
 		'areas' => [],
-		'assetMethods' => [],
 		'authChallenges' => [],
 		'blockMethods' => [],
 		'blockModels' => [],
@@ -147,17 +145,6 @@ trait AppPlugins
 		}
 
 		return $this->extensions['areas'];
-	}
-
-	/**
-	 * Registers additional asset methods
-	 *
-	 * @param array $methods
-	 * @return array
-	 */
-	protected function extendAssetMethods(array $methods): array
-	{
-		return $this->extensions['assetMethods'] = Asset::$methods = array_merge(Asset::$methods, $methods);
 	}
 
 	/**

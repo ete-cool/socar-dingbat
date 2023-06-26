@@ -838,13 +838,11 @@ abstract class FieldClass
 	 */
 	protected function valueToJson(array $value = null, bool $pretty = false): string
 	{
-		$constants = JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE;
-
 		if ($pretty === true) {
-			$constants |= JSON_PRETTY_PRINT;
+			return json_encode($value, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 		}
 
-		return json_encode($value, $constants);
+		return json_encode($value);
 	}
 
 	/**

@@ -153,14 +153,11 @@ class Snippet extends Tpl
 	 * or the template string for self-enclosed snippets
 	 */
 	public static function factory(
-		string|array|null $name,
+		string|array $name,
 		array $data = [],
 		bool $slots = false
 	): static|string {
-		// instead of returning empty string when `$name` is null
-		// allow rest of code to run, otherwise the wrong snippet would be closed
-		// and potential issues for nested snippets may occur
-		$file = $name !== null ? static::file($name) : null;
+		$file = static::file($name);
 
 		// for snippets with slots, make sure to open a new
 		// snippet and start capturing slots
@@ -312,7 +309,7 @@ class Snippet extends Tpl
 			array_key_exists('slot', $data) === true ||
 			array_key_exists('slots', $data) === true
 		) {
-			Helpers::deprecated('Passing the $slot or $slots variables to snippets is deprecated and will break in a future version.', 'snippet-pass-slots');
+			Helpers::deprecated('Passing the $slot or $slots variables to snippets is deprecated and will break in Kirby 3.10.');
 		}
 		// @codeCoverageIgnoreEnd
 

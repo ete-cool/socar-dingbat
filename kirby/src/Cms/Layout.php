@@ -56,7 +56,6 @@ class Layout extends Item
 		parent::__construct($params);
 
 		$this->columns = LayoutColumns::factory($params['columns'] ?? [], [
-			'field'  => $this->field,
 			'parent' => $this->parent
 		]);
 
