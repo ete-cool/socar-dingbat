@@ -1,0 +1,26 @@
+columns:
+  - width: 1/2
+      sections:
+        works:
+          type: pages
+          templates: work
+          fields: 
+            infotext:
+              label: info
+              type: writer
+              marks:
+                - bold
+                - italic
+                - strike
+  - width: 1/2
+      sections:
+        info:
+          type: fields
+          fields: 
+            infotext:
+              label: info
+              type: writer
+              marks:
+                - bold
+                - italic
+                - strike
